@@ -23,8 +23,6 @@ export const getTodo = async (req, res) => {
   const { id } = req.params;
   const userId = req.user;
   const todo = await Todo.query().where({ userId, id }).first();
-  const err = new NotFoundError("test");
-  console.log(err, "statuscode");
   if (!todo) throw new NotFoundError("No such Todo!");
   res.send(todo);
 };
