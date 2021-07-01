@@ -1,0 +1,45 @@
+{
+  "name": "geniem-todo-app-api",
+  "version": "0.0.1-beta",
+  "description": "Recruitment task for Geniem: A simple todo app REST api",
+  "main": "app.js",
+  "scripts": {
+    "setup": "npm install && npm run clean && knex migrate:latest && knex seed:run",
+    "test": "echo \"Tests have not been setup yet!\" && exit 0",
+    "clean": "rimraf todos.db build",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "compile": "tsc",
+    "start": "npm run clean && tsc && node build/src/app.js",
+    "start:watch": "tsc-watch --onSuccess \"node ./build/src/app.js\" --onFailure \"echo Compilation failed! \""
+  },
+  "contributors": [
+    {
+      "name": "Mika Puhakka",
+      "email": "mika.puhakka@geniem.com"
+    },
+    {
+      "name": "Topi Latva-Salo",
+      "email": "topi.latva-salo@geniem.com"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.12",
+    "@types/node": "^15.12.5",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-promise-router": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.19",
+    "morgan": "^1.10.0",
+    "objection": "^2.2.15",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "tsc-watch": "^4.4.0",
+    "typescript": "^4.3.4"
+  }
+}
