@@ -27,6 +27,6 @@ router.post("/todolists", authenticateToken, TodoList.createTodoList);
 router.get("/todolists/:id", authenticateToken, TodoList.getTodoList);
 router.delete("/todolists/:id", authenticateToken, TodoList.deleteTodoList);
 //prettier-ignore
-router.get("/todolists/:id/todos", TodoList.getItemsInTodoList);
+router.get("/todolists/:id/todos",authenticateToken, TodoList.getItemsInTodoList);
 
 export default router;

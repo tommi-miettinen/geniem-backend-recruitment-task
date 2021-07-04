@@ -32,7 +32,7 @@ export const getTodoList = async (req: Request, res: Response) => {
   const id = req.params.id;
   const userId = +req.user;
   const todoList = await TodoList.query().where({ userId, id });
-  if (!todoList.length) throw new NotFoundError("No Todolists found");
+  if (!todoList.length) throw new NotFoundError("No such Todolist!");
   res.send(todoList);
 };
 
@@ -40,7 +40,7 @@ export const getItemsInTodoList = async (req: Request, res: Response) => {
   const id = req.params.id;
   const userId = +req.user;
   const todos = await Todo.query().where({ userId, todoListId: id });
-  if (!todos.length) throw new NotFoundError("No such Todolist");
+  if (!todos.length) throw new NotFoundError("No such Todos");
   res.send(todos);
 };
 
