@@ -1,14 +1,26 @@
 module.exports = {
   development: {
-    client: 'sqlite3',
+    client: "sqlite3",
     useNullAsDefault: true,
     connection: {
-      filename: './todos.db'
+      filename: "./todos.db",
     },
     pool: {
       afterCreate: (conn, cb) => {
-        conn.run('PRAGMA foreign_keys = ON', cb);
-      }
-    }
+        conn.run("PRAGMA foreign_keys = ON", cb);
+      },
+    },
+  },
+  production: {
+    client: "sqlite3",
+    useNullAsDefault: true,
+    connection: {
+      filename: "./todos.db",
+    },
+    pool: {
+      afterCreate: (conn, cb) => {
+        conn.run("PRAGMA foreign_keys = ON", cb);
+      },
+    },
   },
 };

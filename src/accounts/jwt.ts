@@ -1,7 +1,8 @@
 import * as jwt from "jsonwebtoken";
-import { NotAuthorized } from "../Errors";
+import { JwtPayload, Request, Response, Next } from "../types";
+import { NotAuthorizedError } from "../Errors";
 
-const HOUR = 36000;
+const HOUR = 3600;
 const SECRET = process.env.JWT_SIGNING_SECRET;
 
 const getSecondsNow = (): number => Math.floor(new Date().getTime() / 1000);
@@ -12,10 +13,11 @@ const getSecondsNow = (): number => Math.floor(new Date().getTime() / 1000);
  * @param validFor How long should the token stay valid (in seconds)
  */
 
-export const issueToken = (sub: number | string, validFor: number = HOUR) => {
+//prettier-ignore
+export const issueToken = (sub: number | string, validFor: number = HOUR): string => {
   const iat = getSecondsNow();
   const exp = iat + Math.floor(validFor);
-  const payload = {
+  const payload: JwtPayload = {
     sub,
     iat,
     exp,
@@ -29,16 +31,17 @@ export const issueToken = (sub: number | string, validFor: number = HOUR) => {
  * @returns The token payload if the token was valid
  * @throws An error if token was invalid
  */
-export const validateToken = (token: string) => {
+
+export const validateToken = (token: string): JwtPayload => {
   return jwt.verify(token, SECRET);
 };
 
-export const authenticateToken = (req, res, next) => {
+export const authenticateToken = (req: Request, res: Response, next: Next) => {
   try {
     const token = req.headers.authorization.split(" ").pop();
     req.user = validateToken(token).sub;
     next();
   } catch (err) {
-    throw new NotAuthorized("invalid token");
+    throw new NotAuthorizedError("invalid token");
   }
 };
