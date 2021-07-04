@@ -37,15 +37,15 @@ export const getTodoList = async (req: Request, res: Response) => {
 };
 
 export const getItemsInTodoList = async (req: Request, res: Response) => {
-  const id = req.params.id;
+  const todoListId = req.params.id;
   const userId = +req.user;
-  const todos = await Todo.query().where({ userId, todoListId: id });
+  const todos = await Todo.query().where({ userId, todoListId });
   if (!todos.length) throw new NotFoundError("No such Todos");
   res.send(todos);
 };
 
 export const deleteTodoList = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id;
   const userId = +req.user;
   const deletedCount = await TodoList.query().delete().where({ userId, id });
   if (!deletedCount) throw new NotFoundError("No such Todolist!");
